@@ -1,0 +1,7 @@
+.Hero {
+  background: linear-gradient(
+    130deg,
+    rgba(202, 199, 255, 0.835171568627451) 35%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
