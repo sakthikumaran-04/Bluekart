@@ -7,12 +7,16 @@ import addCart from "../../assets/images/addToCart.png";
 import trending from "../../assets/images/trending.png";
 import { Link } from "react-router-dom";
 import Rating from "../Rating/Rating";
-import { useCart } from "../../hooks/useCart hook/useCart.jsx";
-import {useLike} from "../../hooks/useLike hook/useLike.jsx"
+import { useCartStore } from "../../store/CartStore.js";
+import { useLikeStore } from "../../store/LikeStore.js";
 
 function Card(props) {
-  const {addToCart,removeFromCart,cartState}=useCart();
-  const {addToFav,removeFromFav,likeState}=useLike();
+  const cart=useCartStore((state)=>state.cart);
+  const addToCart=useCartStore((state)=>state.addToCart)
+  const removeFromCart = useCartStore((state)=>state.removeFromCart);
+  const like=useLikeStore((state)=>state.like);
+  const addToLike=useLikeStore((state)=>state.addToLike);
+  const removeFromLike=useLikeStore((state)=>state.removeFromLike);
   const [isLiked, setIsLiked] = useState(false);
   const [inCart, setInCart] = useState(false);
   const handleLike = (obj) => {
@@ -20,13 +24,13 @@ function Card(props) {
       toast.success("Removed from Wishlist!", {
         position: "top-center",
       });
-      removeFromFav(obj.id);
+      removeFromLike(obj.id)
     }
     else{
       toast.success("Added to Wishlist!", {
         position: "top-center",
       });
-      addToFav(obj);
+      addToLike(obj);
     }
     setIsLiked((prev) => !prev);
   };
@@ -35,7 +39,7 @@ function Card(props) {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
-      removeFromCart({id:obj.id,removeOne:false});
+      removeFromCart(obj.id)
     }
     else{
       toast.success("Added to Cart!", {
@@ -45,24 +49,12 @@ function Card(props) {
     }
     setInCart((prev) => !prev);
   };
-  const checkCart=()=>{
-    for(let i of cartState.cart){
-      if(props.id==i.id){
-        setInCart(true);
-      }
-    }
-  }
-  const checkLike=()=>{
-    for(let i of likeState.liked){
-      if(props.id==i.id){
-        setIsLiked(true);
-      }
-    }
-  }
-  useEffect(() => {
-    checkCart();
-    checkLike();
-  },[likeState,cartState,handleCart,handleLike])
+  useEffect(()=>{
+    const foundOnCart = cart.some((item)=>item.id==props.id);
+    const foundOnLike = like.some((item)=>item.id==props.id);
+    if(foundOnCart) setInCart(true);
+    if(foundOnLike) setIsLiked(true);
+  },[])
   return (
     <section className="w-[245px] text-center font-body flex flex-col relative items-center justify-center">
       <Link to={`/allproducts/product/${props.id}`}>

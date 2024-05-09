@@ -7,13 +7,12 @@ import favourites from "../../assets/images/not-liked.svg";
 import cart from "../../assets/images/cart.svg";
 import profile from "../../assets/images/profile.svg";
 import { useNavigate } from "react-router-dom";
-import "./Navbar.css";
 import Menu from "../Menu/Menu";
 import { Link } from "react-router-dom";
 import Search from "../Search/Search";
-import { useCart } from "../../hooks/useCart hook/useCart";
+import { useCartStore } from "../../store/CartStore.js";
 function Navbar() {
-  const {cartState}=useCart();
+  const cartLength=useCartStore((state)=>state.cart.length);
   const [showSearch, setshowSearch] = useState(true);
   const navigate = useNavigate();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -98,7 +97,7 @@ function Navbar() {
                   aria-label="cart items"
                 />
                 <span className="text-sm bg-red-500 cursor-pointer text-slate-100 absolute rounded-full w-[15px] h-[18px] top-[-7px] right-[-5px] text-center">
-                  {cartState.cart.length}
+                  {cartLength}
                 </span>
               </span>
             </Link>

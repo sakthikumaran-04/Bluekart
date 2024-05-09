@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import CartCard from "../../components/CartCard/CartCard";
-import { useCart } from "../../hooks/useCart hook/useCart";
+import { useCartStore } from "../../store/CartStore";
 function Cart() {
+  const cart = useCartStore((state) => state.cart);
   const [total, setTotal] = useState(0);
-  const { cartState } = useCart();
   useEffect(() => {
-    let total = 0;
-    for (let i of cartState.cart) {
-      total += i.price * i.quantity;
-    }
-    setTotal(total);
-  });
+    const tempTotal = cart.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.price * currentValue.quantity;
+    }, 0);
+    setTotal(tempTotal);
+  }, [cart]);
   return (
     <section className="font-body flex flex-col items-center min-h-[90vh] pb-20">
       <h2 className="py-6 text-2xl text-slate-600 font-medium ">My Cart</h2>
       <CartCard />
-      {cartState.cart.length > 0 && (
+      {cart.length ? (
         <>
           <p className="pt-10 text-xl font-medium text-slate-600">
             Total : ${total.toFixed(2)}
@@ -24,6 +23,8 @@ function Cart() {
             Checkout
           </button>
         </>
+      ) : (
+        ""
       )}
     </section>
   );

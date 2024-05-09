@@ -1,15 +1,15 @@
 import React from "react";
 import CartButton from "../CartButton/CartButton";
-import { useCart } from "../../hooks/useCart hook/useCart";
 import { Link } from "react-router-dom";
 import emptyCart from "../../assets/images/emptycart.png";
+import { useCartStore } from "../../store/CartStore.js";
 
 function CartCard() {
-  const { cartState } = useCart();
+  const cart = useCartStore((state)=>state.cart);
   return (
     <>
-      {cartState.cart.length > 0 ? (
-        cartState.cart.map((item, i) => {
+      {cart.length > 0 ? (
+        cart.map((item, i) => {
           return (
               <div
                 key={item.id}
@@ -32,14 +32,10 @@ function CartCard() {
                   </Link>
                   <div className="flex items-center pl-3 py-3 justify-between w-full">
                     <CartButton data={{ ...item, index: i }} />
-                    <p className="text-slate-600 text-center w-fit pl-2">
-                      Amount : $
-                      {Number(item.price * cartState.cart[i].quantity).toFixed(
-                        2
-                      )}
-                    </p>
+                    
                   </div>
                 </div>
+                <p className="text-slate-700 text-center p-2">Amount:<br/>${item.price}</p>
               </div>
           );
         })

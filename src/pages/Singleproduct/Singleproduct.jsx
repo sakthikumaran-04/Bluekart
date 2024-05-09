@@ -6,8 +6,6 @@ import loading from "../../assets/images/loading.gif";
 import liked from "../../assets/images/liked.png";
 import not_liked from "../../assets/images/not-liked.png";
 import Similarproducts from "../../components/Similarproducts/Similarproducts";
-import { useLike } from "../../hooks/useLike hook/useLike.jsx";
-import { useCart } from "../../hooks/useCart hook/useCart.jsx";
 import { toast } from "react-toastify";
 import delivery from "../../assets/images/delivery.png";
 import award from "../../assets/images/award.png";
@@ -40,9 +38,7 @@ function Singleproduct() {
     "November",
     "December",
   ]);
-  const { addToFav, removeFromFav, likeState } = useLike();
   const { pathname } = useLocation();
-  const { addToCart, removeFromCart, cartState } = useCart();
   const [isLiked, setIsLiked] = useState(false);
   const [inCart, setInCart] = useState(false);
   const { id } = useParams();
@@ -67,12 +63,10 @@ function Singleproduct() {
       toast.success("Removed from Wishlist!", {
         position: "top-center",
       });
-      removeFromFav(obj.id);
     } else {
       toast.success("Added to Wishlist!", {
         position: "top-center",
       });
-      addToFav(obj);
     }
     setIsLiked((prev) => !prev);
   };
@@ -81,28 +75,12 @@ function Singleproduct() {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
-      removeFromCart({ id: obj.id, removeOne: false });
     } else {
       toast.success("Added to Cart!", {
         position: "top-center",
       });
-      addToCart(obj);
     }
     setInCart((prev) => !prev);
-  };
-  const checkCart = () => {
-    for (let i of cartState.cart) {
-      if (product._id == i.id) {
-        setInCart(true);
-      }
-    }
-  };
-  const checkLike = () => {
-    for (let i of likeState.liked) {
-      if (product._id == i.id) {
-        setIsLiked(true);
-      }
-    }
   };
   const scrollToTop = () => {
     window.scrollTo({
@@ -117,11 +95,6 @@ function Singleproduct() {
   useEffect(() => {
     scrollToTop();
   }, [rating]);
-  useEffect(() => {
-    checkLike();
-    checkCart();
-  });
-  console.log(cartState);
   return (
     <>
       {isLoading ? (

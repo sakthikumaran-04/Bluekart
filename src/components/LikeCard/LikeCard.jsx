@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useLike } from "../../hooks/useLike hook/useLike.jsx";
 import { Link } from "react-router-dom";
 import emptyCart from "../../assets/images/emptycart.png";
 import SingleLikeCard from "../SingleLikeCard/SingleLikeCard.jsx";
+import { useLikeStore } from "../../store/LikeStore.js";
 function LikeCard() {
-  const {likeState}=useLike();
+  const like = useLikeStore((state)=>state.like)
   return (
     <>
-      {likeState.liked.length > 0 ? (
+      {like.length > 0 ? (
 
           <div>
-            {likeState.liked.map((item)=>{
+            {like.map((item)=>{
               return <SingleLikeCard key={item.id} data={item} />
             })}
           </div>

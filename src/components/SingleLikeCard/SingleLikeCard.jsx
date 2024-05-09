@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import cart from "../../assets/images/addToCart.png";
-import { useCart } from "../../hooks/useCart hook/useCart.jsx";
-import { useLike } from "../../hooks/useLike hook/useLike.jsx";
+import cartImg from "../../assets/images/addToCart.png";
 import check from "../../assets/images/tick.png";
-import like from "../../assets/images/liked.png";
+import liked from "../../assets/images/liked.png";
 import noLike from "../../assets/images/not-liked.png";
 import { Link } from "react-router-dom";
+import { useCartStore } from "../../store/CartStore.js";
+import { useLikeStore } from "../../store/LikeStore.js";
 function SingleLikeCard({ data }) {
-  const { addToCart, removeFromCart, cartState } = useCart();
-  const { addToFav, removeFromFav, likeState } = useLike();
+  const like = useLikeStore((state)=>state.like);
+  const cart = useCartStore((state)=>state.cart);
+  const removeFromLike=useLikeStore((state)=>state.removeFromLike);
+  const addToLike=useLikeStore((state)=>state.addToLike);
+  const removeFromCart=useCartStore((state)=>state.removeFromCart);
+  const addToCart=useCartStore((state)=>state.addToCart);
   const [isLiked, setIsLiked] = useState(false);
   const [inCart, setInCart] = useState(false);
   const handleLike = (obj) => {
@@ -17,12 +21,12 @@ function SingleLikeCard({ data }) {
       toast.success("Removed from Wishlist!", {
         position: "top-center",
       });
-      removeFromFav(obj.id);
+      removeFromLike(obj.id)
     } else {
       toast.success("Added to Wishlist!", {
         position: "top-center",
       });
-      addToFav(obj);
+      addToLike(obj)
     }
     setIsLiked((prev) => !prev);
   };
@@ -31,7 +35,7 @@ function SingleLikeCard({ data }) {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
-      removeFromCart({id:obj.id,removeOne:false});
+      removeFromCart(obj.id)
     } else {
       toast.success("Added to Cart!", {
         position: "top-center",
@@ -39,26 +43,13 @@ function SingleLikeCard({ data }) {
       addToCart(obj);
     }
     setInCart((prev) => !prev);
-
   };
-  const checkCart = () => {
-    for (let i of cartState.cart) {
-      if (data.id == i.id) {
-        setInCart(true);
-      }
-    }
-  };
-  const checkLike = () => {
-    for (let i of likeState.liked) {
-      if (data.id == i.id) {
-        setIsLiked(true);
-      }
-    }
-  };
-  useEffect(() => {
-    checkCart();
-    checkLike();
-  }, [likeState]);
+  useEffect(()=>{
+    const foundOnLike = like.some((item)=>item.id==data.id) ;
+    const foundOnCart = cart.some((item)=>item.id==data.id) ;
+    if(foundOnCart) setInCart(true);
+    if(foundOnLike) setIsLiked(true)
+  },[])
   return (
     <div
       key={data.id}
@@ -90,10 +81,10 @@ function SingleLikeCard({ data }) {
             })
           }
         >
-          <img src={inCart? check:cart} className={`w-[28px] h-[26px]`} alt="add to cart" />
+          <img src={inCart? check:cartImg} className={`w-[28px] h-[26px]`} alt="add to cart" />
         </button>
         <button className="p-2 border-2 rounded-md" onClick={()=>handleLike({id:data.id})}>
-          <img src={isLiked ? like : noLike}  className="w-[28px]" alt="liked" />
+          <img src={isLiked ? liked : noLike}  className="w-[28px]" alt="liked" />
         </button>
       </div>
     </div>
