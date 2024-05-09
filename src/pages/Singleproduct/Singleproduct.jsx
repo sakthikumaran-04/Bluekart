@@ -10,7 +10,15 @@ import { toast } from "react-toastify";
 import delivery from "../../assets/images/delivery.png";
 import award from "../../assets/images/award.png";
 import payOnDelivery from "../../assets/images/cash.png";
+import { useCartStore } from "../../store/CartStore";
+import { useLikeStore } from "../../store/LikeStore";
 function Singleproduct() {
+  const cart = useCartStore((state)=>state.cart);
+  const like = useLikeStore((state)=>state.like);
+  const addToCart=useCartStore((state)=>state.addToCart);
+  const removeFromCart=useCartStore((state)=>state.removeFromCart);
+  const addToLike=useLikeStore((state)=>state.addToLike);
+  const removeFromLike=useLikeStore((state)=>state.removeFromLike);
   const [isLoading, setisLoading] = useState(false);
   const [date, setdate] = useState(
     new Date().setDate(new Date().getDate() + 2)
@@ -63,10 +71,12 @@ function Singleproduct() {
       toast.success("Removed from Wishlist!", {
         position: "top-center",
       });
+      removeFromLike(obj.id);
     } else {
       toast.success("Added to Wishlist!", {
         position: "top-center",
       });
+      addToLike(obj);
     }
     setIsLiked((prev) => !prev);
   };
@@ -75,10 +85,12 @@ function Singleproduct() {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
+      removeFromCart(obj.id);
     } else {
       toast.success("Added to Cart!", {
         position: "top-center",
       });
+      addToCart(obj);
     }
     setInCart((prev) => !prev);
   };
@@ -90,11 +102,16 @@ function Singleproduct() {
   };
   useEffect(() => {
     fetchProduct();
+    setInCart(false);
+    setIsLiked(false);
     scrollToTop();
-  }, [id]);
-  useEffect(() => {
-    scrollToTop();
-  }, [rating]);
+   }, [id]);
+  useEffect(()=>{
+    const foundOnCart = cart.some((item)=>item.id==id);
+    const foundOnLike = like.some((item)=>item.id==id);
+    if(foundOnCart) setInCart(true);
+    if(foundOnLike) setIsLiked(true);
+  },[cart,like,id])
   return (
     <>
       {isLoading ? (
