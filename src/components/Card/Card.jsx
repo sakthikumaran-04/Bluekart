@@ -9,24 +9,27 @@ import { Link } from "react-router-dom";
 import Rating from "../Rating/Rating";
 import { useCartStore } from "../../store/CartStore.js";
 import { useLikeStore } from "../../store/LikeStore.js";
+import { useAuthStore } from "../../store/AuthStore.js";
 
 function Card(props) {
-  const cart=useCartStore((state)=>state.cart);
-  const addToCart=useCartStore((state)=>state.addToCart)
-  const removeFromCart = useCartStore((state)=>state.removeFromCart);
-  const like=useLikeStore((state)=>state.like);
-  const addToLike=useLikeStore((state)=>state.addToLike);
-  const removeFromLike=useLikeStore((state)=>state.removeFromLike);
+  const cart = useCartStore((state) => state.cart);
+  const auth = useAuthStore((state) => state.auth);
+  const updateCart = useCartStore((state) => state.updateCart);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const like = useLikeStore((state) => state.like);
+  const addToLike = useLikeStore((state) => state.addToLike);
+  const removeFromLike = useLikeStore((state) => state.removeFromLike);
   const [isLiked, setIsLiked] = useState(false);
   const [inCart, setInCart] = useState(false);
+
   const handleLike = (obj) => {
-    if (isLiked){
+    if (isLiked) {
       toast.success("Removed from Wishlist!", {
         position: "top-center",
       });
-      removeFromLike(obj.id)
-    }
-    else{
+      removeFromLike(obj.id);
+    } else {
       toast.success("Added to Wishlist!", {
         position: "top-center",
       });
@@ -34,27 +37,30 @@ function Card(props) {
     }
     setIsLiked((prev) => !prev);
   };
+
   const handleCart = (obj) => {
-    if (inCart){
+    setInCart((prev) => !prev);
+    if (inCart) {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
-      removeFromCart(obj.id)
-    }
-    else{
+      removeFromCart(obj.id, true);
+    } else {
       toast.success("Added to Cart!", {
         position: "top-center",
       });
       addToCart(obj);
     }
-    setInCart((prev) => !prev);
   };
-  useEffect(()=>{
-    const foundOnCart = cart.some((item)=>item.id==props.id);
-    const foundOnLike = like.some((item)=>item.id==props.id);
-    if(foundOnCart) setInCart(true);
-    if(foundOnLike) setIsLiked(true);
-  },[])
+
+  useEffect(() => {
+    const foundOnCart = cart.some((item) => item.id === props.id);
+    const foundOnLike = like.some((item) => item.id === props.id);
+    if (foundOnCart) setInCart(true);
+    if (foundOnLike) setIsLiked(true);
+    // Update cart whenever there is a change in cart or authentication status
+  }, [cart, auth, props.id, like]);
+
   return (
     <section className="w-[245px] text-center font-body flex flex-col relative items-center justify-center">
       <Link to={`/allproducts/product/${props.id}`}>
@@ -82,7 +88,11 @@ function Card(props) {
         </div>
         <div className="flex items-center justify-between m-2">
           <p className="border-2 p-1 rounded-md">In Stock</p>
-          <Rating rating={props.rating} price={props.price} ratingCount={props.ratingCount}/>
+          <Rating
+            rating={props.rating}
+            price={props.price}
+            ratingCount={props.ratingCount}
+          />
         </div>
       </Link>
       <div className="flex items-center justify-between px-2 p-2 w-full">
@@ -90,7 +100,14 @@ function Card(props) {
         <div className="flex gap-2">
           <button
             className="border-2 p-2 flex items-center justify-center rounded-lg"
-            onClick={()=>handleLike({id:props.id,title:props.title,price:props.price,image:props.image})}
+            onClick={() =>
+              handleLike({
+                id: props.id,
+                title: props.title,
+                price: props.price,
+                image: props.image,
+              })
+            }
           >
             <img
               src={isLiked ? liked : not_liked}
@@ -98,8 +115,22 @@ function Card(props) {
               alt="like"
             />
           </button>
-          <button className="p-1 border-2 flex items-center justify-center rounded-lg" onClick={()=>handleCart({id:props.id,title:props.title,price:props.price,image:props.image})}>
-            <img src={inCart ? check : addCart} className={`${inCart?"p-1":" "} w-[33px]" h-[33px]`} alt="add to cart" />
+          <button
+            className="p-1 border-2 flex items-center justify-center rounded-lg"
+            onClick={() =>
+              handleCart({
+                id: props.id,
+                title: props.title,
+                price: props.price,
+                image: props.image,
+              })
+            }
+          >
+            <img
+              src={inCart ? check : addCart}
+              className={`${inCart ? "p-1" : " "} w-[33px]" h-[33px]`}
+              alt="add to cart"
+            />
           </button>
         </div>
       </div>

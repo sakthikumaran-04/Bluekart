@@ -11,8 +11,11 @@ import Menu from "../Menu/Menu";
 import { Link } from "react-router-dom";
 import Search from "../Search/Search";
 import { useCartStore } from "../../store/CartStore.js";
+import { account  } from "../../appwrite/config.js";
+import { useAuthStore } from "../../store/AuthStore.js";
+
 function Navbar() {
-  const cartLength=useCartStore((state)=>state.cart.length);
+  const cartLength=useCartStore((state)=>state.cart?.length);
   const [showSearch, setshowSearch] = useState(true);
   const navigate = useNavigate();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -43,6 +46,9 @@ function Navbar() {
       window.removeEventListener("resize", detectResize);
     };
   }, [screenWidth]);
+  useEffect(()=>{
+  console.log(account);
+  },[])
   return (
     <>
       <nav className="sticky top-0 z-10 font-body shadow-md bg-white py-2 w-[100%] overflow-hidden">

@@ -35,7 +35,7 @@ function CartCard() {
                     
                   </div>
                 </div>
-                <p className="text-slate-700 text-center p-2">Amount:<br/>${item.price}</p>
+                <p className="text-slate-700 text-center p-2">Amount:<br/>${(item.price*item.quantity).toFixed(2)}</p>
               </div>
           );
         })

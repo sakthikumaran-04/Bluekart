@@ -14,8 +14,39 @@ import SearchResults from "./pages/searchResults/SearchResults.jsx";
 import Cart from "./pages/CartPage/Cart.jsx";
 import Like from "./pages/LikePage/Like.jsx";
 import AuthForm from "./pages/AuthForm/AuthForm.jsx";
+import { useEffect } from "react";
+import { useAuthStore } from "./store/AuthStore.js";
+import { useCartStore } from "./store/CartStore.js";
+import { useLikeStore } from "./store/LikeStore.js";
 
 function App() {
+  const auth=useAuthStore((state)=>state.auth);
+  const cart = useCartStore((state)=>state.cart);
+  const like = useLikeStore((state)=>state.like);
+  const updateCart = useCartStore((state)=>state.updateCart);
+  const updateLike = useLikeStore((state)=>state.updateLike);
+  const authInit = useAuthStore((state)=>state.init);
+  const cartInit = useCartStore((state)=>state.init);
+  const likeInit = useLikeStore((state)=>state.init);
+  useEffect(()=>{
+    authInit();
+  },[])
+  useEffect(()=>{
+    if(auth) {
+      cartInit(auth.email);
+      likeInit(auth.email);
+    };
+  },[auth])
+  useEffect(()=>{
+    if (auth){ 
+      updateCart(auth.id);
+    }
+  },[cart])
+  useEffect(()=>{
+    if(auth){
+      updateLike(auth.id);
+    }
+  },[like])
   return (
     <HashRouter>
       <ToastContainer

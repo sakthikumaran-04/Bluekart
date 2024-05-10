@@ -85,7 +85,7 @@ function Singleproduct() {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
-      removeFromCart(obj.id);
+      removeFromCart(obj.id,true);
     } else {
       toast.success("Added to Cart!", {
         position: "top-center",
@@ -217,7 +217,7 @@ function Singleproduct() {
                 >
                   {inCart ? "Remove from cart" : "Add to cart"}
                 </button>
-                <button className="p-3 w-80  bg-blue-500 text-slate-50 border-2 border-blue-500 max-w-80 rounded-lg">
+                <button className="p-3 w-80  bg-blue-500 text-slate-50 border-2 border-blue-500 max-w-80 rounded-lg font-medium">
                   Buy Now
                 </button>
               </div>

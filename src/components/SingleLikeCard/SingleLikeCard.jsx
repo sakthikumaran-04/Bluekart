@@ -35,7 +35,7 @@ function SingleLikeCard({ data }) {
       toast.success("Removed from Cart!", {
         position: "top-center",
       });
-      removeFromCart(obj.id)
+      removeFromCart(obj.id,true)
     } else {
       toast.success("Added to Cart!", {
         position: "top-center",

@@ -3,13 +3,15 @@ import "./Hero.css";
 import img from "../../assets/images/hero.png";
 import rightArr from "../../assets/images/right-arrow.svg";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../store/AuthStore";
 function Hero() {
+  const auth = useAuthStore((state)=>state.auth);
   return (
     <>
       <section className="Hero min-h-[90svh] -z-10 gap-9 grid grid-cols-2 place-content-center max-md:grid-cols-1 max-md:grid-flow-row">
         <div className="flex-1 px-6 pb-7 flex items-center justify-center font-body font-medium max-md:order-1">
           <div className="flex flex-col gap-4 ">
-            <h2 className="text-5xl max-md:text-3xl">Hey There 👋</h2>
+            <h2 className="text-5xl max-md:text-3xl">Hey {auth?.id? String(auth.username).charAt(0).toUpperCase()+String(auth.username).slice(1) : "There"} 👋</h2>
             <p className="text-xl max-md:text-lg">
               Get Upto 30% Off On New Arrivals
             </p>
