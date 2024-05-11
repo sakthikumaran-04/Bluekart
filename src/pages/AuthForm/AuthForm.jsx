@@ -6,6 +6,7 @@ import { useAuthStore } from "../../store/AuthStore";
 import {useNavigate} from "react-router-dom";
 import loadingImg from "../../assets/images/loading-new.gif"
 import { database } from "../../appwrite/config";
+import {toast} from "react-toastify";
 import {Query} from "appwrite"
 function AuthForm({ type }) {
   const navigate = useNavigate();
@@ -45,7 +46,10 @@ function AuthForm({ type }) {
         const res = await database.listDocuments(import.meta.env.VITE_DB_ID,import.meta.env.VITE_COLLECTION_ID,[
           Query.equal('email',email)])
         await loginWithEmailAndPassword(res.documents[0].$id, email,password);
-        navigate("/")
+        if(auth&&!auth.isVerified){
+          navigate("/auth/verify")
+        }else{
+          navigate("/")}
         setLoading(false)
       } catch (error) {
         console.log(error)
@@ -55,6 +59,10 @@ function AuthForm({ type }) {
 
   useEffect(() => {
     console.log(auth);
+    if(auth&&!auth.isVerified){
+      
+      navigate("/auth/verify");
+    }
   }, [auth]);
   return (
     <section className="py-12 flex items-center justify-center">

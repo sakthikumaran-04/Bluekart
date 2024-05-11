@@ -11,6 +11,7 @@ const getAuth = async () => {
       id: res.documents[0].$id,
       username: data.name,
       email: data.email,
+      isVerified:data.emailVerification
     };
   } catch (error) {
     console.log(error);
@@ -32,6 +33,7 @@ export const useAuthStore = create((set) => ({
           id: id,
           username: result.name,
           email: result.email,
+          isVerified:result.emailVerification
         },
       });
     } catch (error) {
@@ -48,8 +50,17 @@ export const useAuthStore = create((set) => ({
           id: id,
           username: data.name,
           email: data.email,
+          isVerified:data.emailVerification
         },
       });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  doVerify:async ()=>{
+    try {
+      const data = await account.get("current");
+      set((state)=>({auth:{...state.auth,isVerified:true}}))
     } catch (error) {
       console.log(error);
     }

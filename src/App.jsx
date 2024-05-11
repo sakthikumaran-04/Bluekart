@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "./store/AuthStore.js";
 import { useCartStore } from "./store/CartStore.js";
 import { useLikeStore } from "./store/LikeStore.js";
-
+import Verify from "./pages/VerifyPage/Verify.jsx";
 function App() {
   const auth=useAuthStore((state)=>state.auth);
   const cart = useCartStore((state)=>state.cart);
@@ -72,6 +72,7 @@ function App() {
         <Route path="/search/:search" element={<SearchResults />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/favourites" element={<Like />} />
+        <Route path="/auth/verify" element={<Verify />}/>
         <Route path="/signin" element={<AuthForm type={"sign in"} />} />
         <Route path="/signup" element={<AuthForm type={"sign up"}/>} />
       </Routes>

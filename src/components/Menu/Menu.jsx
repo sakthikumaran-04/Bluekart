@@ -13,9 +13,9 @@ function Menu(props) {
   const [isLogin, setisLogin] = useState(false);
   const navigate = useNavigate();
   const logout=useAuthStore((state)=>state.logout)
-  const handleLogin = () =>{
+  const handleLogin = async() =>{
     if(isLogin){
-      logout();
+      await logout();
       setisLogin(false);
     }else{
       navigate("/signup")
