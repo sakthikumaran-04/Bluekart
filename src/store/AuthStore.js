@@ -1,4 +1,5 @@
 import { account, database } from "../appwrite/config";
+import {toast} from "react-toastify"
 import { create } from "zustand";
 import {Query} from "appwrite";
 const getAuth = async () => {
@@ -37,7 +38,15 @@ export const useAuthStore = create((set) => ({
         },
       });
     } catch (error) {
-      console.log(error);
+      console.log(error);if (error.message.includes("Invalid credentials")) {
+        toast.error("Invalid credential!", {
+          position: "top-center",
+        });
+      } else {
+        toast.error("Unexpected Error", {
+          position: "top-center",
+        });
+      }
     }
   },
   loginWithEmailAndPassword: async (id,email, password) => {
@@ -54,8 +63,24 @@ export const useAuthStore = create((set) => ({
         },
       });
     } catch (error) {
-      console.log(error);
+      if (error.message.includes("Invalid credentials")) {
+        toast.error("Invalid credential!", {
+          position: "top-center",
+        });
+      } else {
+        toast.error("Unexpected Error", {
+          position: "top-center",
+        });
+      }
     }
+  },
+  createOAuthSession:async()=>{
+    const data = await account.createOAuth2Session(
+      "google",
+      "http://localhost:5173/",
+      "http://localhost:5173/#/signup"
+    )
+    console.log(data);
   },
   doVerify:async ()=>{
     try {

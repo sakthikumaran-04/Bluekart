@@ -19,34 +19,36 @@ import { useAuthStore } from "./store/AuthStore.js";
 import { useCartStore } from "./store/CartStore.js";
 import { useLikeStore } from "./store/LikeStore.js";
 import Verify from "./pages/VerifyPage/Verify.jsx";
+import PrivateRoutes from "./utils/PrivateRoutes.jsx";
+
 function App() {
-  const auth=useAuthStore((state)=>state.auth);
-  const cart = useCartStore((state)=>state.cart);
-  const like = useLikeStore((state)=>state.like);
-  const updateCart = useCartStore((state)=>state.updateCart);
-  const updateLike = useLikeStore((state)=>state.updateLike);
-  const authInit = useAuthStore((state)=>state.init);
-  const cartInit = useCartStore((state)=>state.init);
-  const likeInit = useLikeStore((state)=>state.init);
-  useEffect(()=>{
+  const auth = useAuthStore((state) => state.auth);
+  const cart = useCartStore((state) => state.cart);
+  const like = useLikeStore((state) => state.like);
+  const updateCart = useCartStore((state) => state.updateCart);
+  const updateLike = useLikeStore((state) => state.updateLike);
+  const authInit = useAuthStore((state) => state.init);
+  const cartInit = useCartStore((state) => state.init);
+  const likeInit = useLikeStore((state) => state.init);
+  useEffect(() => {
     authInit();
-  },[])
-  useEffect(()=>{
-    if(auth) {
+  }, []);
+  useEffect(() => {
+    if (auth) {
       cartInit(auth.email);
       likeInit(auth.email);
-    };
-  },[auth])
-  useEffect(()=>{
-    if (auth){ 
+    }
+  }, [auth]);
+  useEffect(() => {
+    if (auth) {
       updateCart(auth.id);
     }
-  },[cart])
-  useEffect(()=>{
-    if(auth){
+  }, [cart]);
+  useEffect(() => {
+    if (auth) {
       updateLike(auth.id);
     }
-  },[like])
+  }, [like]);
   return (
     <HashRouter>
       <ToastContainer
@@ -64,17 +66,19 @@ function App() {
       <Navbar />
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/categories/:category" element={<CategoryPage />} />
-        <Route path="/allproducts" element={<Allproducts />} />
-        <Route path="allproducts/product/:id" element={<Singleproduct />} />
-        <Route path="/search/:search" element={<SearchResults />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/favourites" element={<Like />} />
-        <Route path="/auth/verify" element={<Verify />}/>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/categories/:category" element={<CategoryPage />} />
+          <Route path="/allproducts" element={<Allproducts />} />
+          <Route path="allproducts/product/:id" element={<Singleproduct />} />
+          <Route path="/search/:search" element={<SearchResults />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/favourites" element={<Like />} />
+        </Route>
+        <Route path="/auth/verify" element={<Verify />} />
         <Route path="/signin" element={<AuthForm type={"sign in"} />} />
-        <Route path="/signup" element={<AuthForm type={"sign up"}/>} />
+        <Route path="/signup" element={<AuthForm type={"sign up"} />} />
       </Routes>
       <Footer />
     </HashRouter>

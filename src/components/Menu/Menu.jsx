@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import login from "../../assets/categories/login.svg";
 import logoutImg from "../../assets/categories/logout.svg";
-import { useAuthStore } from "../../store/AuthStore";
+import { useAuthStore } from "../../store/AuthStore.js";
 import {useNavigate} from "react-router-dom";
 import { useCartStore } from "../../store/CartStore";
 import { useLikeStore } from "../../store/LikeStore";
