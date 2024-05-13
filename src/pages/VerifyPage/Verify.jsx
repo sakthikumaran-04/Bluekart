@@ -56,7 +56,7 @@ function Verify() {
     const data = await account.get("current");
     if (!data.emailVerification) {
       const link = await account.createVerification(
-        "http://localhost:5173/#/auth/verify"
+        `${import.meta.env.VITE_HOST}/#/auth/verify`
       );
       console.log(link);
       if (link.$id) {

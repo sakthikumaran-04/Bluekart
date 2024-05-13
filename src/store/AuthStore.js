@@ -77,8 +77,8 @@ export const useAuthStore = create((set) => ({
   createOAuthSession:async()=>{
     const data = await account.createOAuth2Session(
       "google",
-      "http://localhost:5173/",
-      "http://localhost:5173/#/signup"
+      `${import.meta.env.VITE_HOST}/`,
+      `${import.meta.env.VITE_HOST}/#/signup`
     )
     console.log(data);
   },
