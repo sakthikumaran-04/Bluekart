@@ -62,6 +62,7 @@ function AuthForm({ type, msg }) {
   };
 
   const googleLogin = async (e) => {
+    e.preventDefault();
     setLoading(true);
     registerWithGoogle();
     setLoading(false);
