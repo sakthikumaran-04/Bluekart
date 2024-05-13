@@ -11,7 +11,7 @@ function Allproducts() {
   async function fetchAllproducts() {
     setLoading(true);
     const response = await fetch(
-      `/api/products?skip=${skip}&limit=${limit}`
+      `${import.meta.env.VITE_API}/api/products?skip=${skip}&limit=${limit}`
     );
     const data = await response.json();
     setAllproducts((prev) => [...prev, ...data.products]);

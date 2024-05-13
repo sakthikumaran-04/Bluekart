@@ -48,7 +48,7 @@ function Menu(props) {
           Report Bug
         </button>
       </Link>
-      <Link to={`${isLogin ? "/logout" : "/signup"}`}>
+      <Link to={"/signup"}>
         <button
           className="px-5 py-2 flex items-center gap-2 bg-blue-500 text-white rounded-lg mt-3"
           onClick={() => {
