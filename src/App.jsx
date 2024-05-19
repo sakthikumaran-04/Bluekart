@@ -20,16 +20,23 @@ import { useCartStore } from "./store/CartStore.js";
 import { useLikeStore } from "./store/LikeStore.js";
 import Verify from "./pages/VerifyPage/Verify.jsx";
 import PrivateRoutes from "./utils/PrivateRoutes.jsx";
+import Success from "./pages/Payment/Success.jsx";
+import Cancel from "./pages/Payment/Cancel.jsx";
+import { useOrderStore } from "./store/OrderStore.js";
+import Myorders from "./pages/Myorders/Myorders.jsx";
 
 function App() {
   const auth = useAuthStore((state) => state.auth);
   const cart = useCartStore((state) => state.cart);
   const like = useLikeStore((state) => state.like);
+  const orders = useOrderStore((state)=> state.orders);
   const updateCart = useCartStore((state) => state.updateCart);
   const updateLike = useLikeStore((state) => state.updateLike);
+  const updateOrders = useOrderStore((state)=>state.updateOrders);
   const authInit = useAuthStore((state) => state.init);
   const cartInit = useCartStore((state) => state.init);
   const likeInit = useLikeStore((state) => state.init);
+  const orderInit = useOrderStore((state)=>state.init);
   useEffect(() => {
     authInit();
   }, []);
@@ -37,6 +44,7 @@ function App() {
     if (auth) {
       cartInit(auth.email);
       likeInit(auth.email);
+      orderInit(auth.email);
     }
   }, [auth]);
   useEffect(() => {
@@ -49,6 +57,11 @@ function App() {
       updateLike(auth.id);
     }
   }, [like]);
+  useEffect(() => {
+    if (auth) {
+      updateOrders(auth.id);
+    }
+  }, [orders]);
   return (
     <HashRouter>
       <ToastContainer
@@ -66,16 +79,19 @@ function App() {
       <Navbar />
       <ScrollToTop />
       <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/categories/:category" element={<CategoryPage />} />
+        <Route path="/allproducts" element={<Allproducts />} />
+        <Route path="allproducts/product/:id" element={<Singleproduct />} />
+        <Route path="/search/:search" element={<SearchResults />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/categories/:category" element={<CategoryPage />} />
-          <Route path="/allproducts" element={<Allproducts />} />
-          <Route path="allproducts/product/:id" element={<Singleproduct />} />
-          <Route path="/search/:search" element={<SearchResults />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/favourites" element={<Like />} />
+          <Route path="/myorders" element={<Myorders />} />
         </Route>
+        <Route path="/success/:token" element={<Success />} />
+        <Route path="/cancel/:token" element={<Cancel />} />
         <Route path="/auth/verify" element={<Verify />} />
         <Route path="/signin" element={<AuthForm type={"sign in"} />} />
         <Route path="/signup" element={<AuthForm type={"sign up"} />} />

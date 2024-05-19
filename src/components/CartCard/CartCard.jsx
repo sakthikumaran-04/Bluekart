@@ -26,7 +26,7 @@ function CartCard() {
                 </Link>
                 <div className="pl-5 w-full max-w-4xl">
                   <Link to={`/allproducts/product/${item.id}`}>
-                    <p className="text-slate-900 md:text-lg md:w-[600px] pl-3  text-ellipsis line-clamp-2">
+                    <p className="text-slate-900 md:text-lg px-3 text-ellipsis line-clamp-2">
                       {item.title}
                     </p>
                   </Link>

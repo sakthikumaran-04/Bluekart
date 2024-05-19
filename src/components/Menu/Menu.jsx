@@ -38,9 +38,9 @@ function Menu(props) {
         props.isMenu ? "visible" : "invisible"
       } top-16 bg-slate-50 p-7 border-2 rounded-lg flex flex-col`}
     >
-      <Link to={"/account"}>
+      <Link to={"/myorders"}>
         <button className="p-1" onClick={() => props.setMenu((prev) => !prev)}>
-          Account
+          My Orders
         </button>
       </Link>
       <Link to={"/bug-report"}>

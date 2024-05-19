@@ -14,7 +14,6 @@ import { useAuthStore } from "../../store/AuthStore.js";
 function Card(props) {
   const cart = useCartStore((state) => state.cart);
   const auth = useAuthStore((state) => state.auth);
-  const updateCart = useCartStore((state) => state.updateCart);
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const like = useLikeStore((state) => state.like);
@@ -82,7 +81,7 @@ function Card(props) {
           <h2 className="py-1 text-lg text-slate-700 text-ellipsis w-[240px] h-[28px] whitespace-nowrap overflow-hidden">
             {props.title}
           </h2>
-          <h4 className="py-1 text-sm text-slate-400 text-ellipsis text-center line-clamp-3">
+          <h4 className="py-1 text-sm text-slate-500 text-ellipsis text-center line-clamp-3">
             {props.description}
           </h4>
         </div>

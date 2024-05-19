@@ -78,7 +78,7 @@ export const useAuthStore = create((set) => ({
     const data = account.createOAuth2Session(
       "google",
       "https://bluekart.vercel.app/#/",
-      "https://bluekart.vercel.app/#/signin"
+      "https://bluekart.vercel.app/#/signin"    
     )
   },
   doVerify:async ()=>{
