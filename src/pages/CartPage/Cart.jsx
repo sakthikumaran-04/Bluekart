@@ -4,8 +4,10 @@ import { useCartStore } from "../../store/CartStore";
 import { loadStripe } from "@stripe/stripe-js";
 function Cart() {
   const cart = useCartStore((state) => state.cart);
+  const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const makePayment = async () => {
+    setLoading(true);
     const stripe = await loadStripe("pk_test_51PGjTUSGxdYiwyg2XiBSlLknLT7r2DAJ53YMVE9dniv8HEHKq3OLSMVOXnJKDIGAaB3o5lO93UaB15jNFDikvkdk00y2iBNZKb");
     const body = {
       products: cart,
@@ -13,7 +15,7 @@ function Cart() {
     const headers = {
       "Content-Type": "application/json",
     };
-    const response = await fetch(`http://localhost:3000/api/payment`, {
+    const response = await fetch(`${import.meta.env.VITE_API}/api/payment`, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(body),
@@ -91,7 +93,7 @@ function Cart() {
           </div>
         </div>
         <button className="bg-blue-500 py-2 px-24 my-5 rounded-lg text-white font-medium" onClick={makePayment}>
-            Checkout
+            {loading?"loading":"Checkout"}
           </button> 
       </section>
     </div>
