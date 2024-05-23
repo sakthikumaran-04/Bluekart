@@ -5,9 +5,25 @@ import {Query} from "appwrite";
 const getAuth = async () => {
   try {
     const data = await account.get("current");
-    const res = await database.listDocuments(import.meta.env.VITE_DB_ID,import.meta.env.VITE_COLLECTION_ID,[
+    let res = await database.listDocuments(import.meta.env.VITE_DB_ID,import.meta.env.VITE_COLLECTION_ID,[
       Query.equal('email',data.email)])
-  
+     console.log(res);
+     if(res.documents.length==0){
+      const temp = await database.createDocument(
+        import.meta.env.VITE_DB_ID,
+        import.meta.env.VITE_COLLECTION_ID,
+        `unique()`,
+        {
+          email: data.email,
+          cart: [],
+          like: [],
+          orders: [],
+        }
+      );
+      res=await database.listDocuments(import.meta.env.VITE_DB_ID,import.meta.env.VITE_COLLECTION_ID,[
+        Query.equal('email',data.email)])
+     }
+     console.log(data)
     return {
       id: res.documents[0].$id,
       username: data.name,
@@ -75,11 +91,7 @@ export const useAuthStore = create((set) => ({
     }
   },
   createOAuthSession:async()=>{
-    const data = account.createOAuth2Session(
-      "google",
-      "https://bluekart.vercel.app/#/",
-      "https://bluekart.vercel.app/#/signin"    
-    )
+    const data = account.createOAuth2Session("google","https://bluekart.vercel.app/#/","https://bluekart.vercel.app/#/signin")
   },
   doVerify:async ()=>{
     try {

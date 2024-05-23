@@ -38,7 +38,7 @@ export const useOrderStore = create((set) => ({
   orders: [],
   init: async (email) => {
     const data = await getOrders(email);
-    const arr = JSON.parse(data.orders);
+    const arr = JSON.parse(data.orders[0]||data.orders);
     set({ orders: arr });
   },
   addToOrders: async(id,orderid, payload) =>{
