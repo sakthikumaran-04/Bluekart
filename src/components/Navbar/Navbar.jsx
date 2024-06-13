@@ -46,12 +46,10 @@ function Navbar() {
       window.removeEventListener("resize", detectResize);
     };
   }, [screenWidth]);
-  useEffect(()=>{
-  console.log(account);
-  },[])
+  
   return (
     <>
-      <nav className="sticky top-0 z-10 font-body shadow-md bg-white py-2 w-[100%] overflow-hidden">
+      <nav className="sticky top-0 z-10 font-body shadow-md bg-white py-2 w-full">
         <section className="font-body flex justify-around w-[100%] items-center py-2">
           <Link to={"/"}>
             <section className="flex items-center gap-3">

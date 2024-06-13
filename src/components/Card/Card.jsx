@@ -95,7 +95,7 @@ function Card(props) {
         </div>
       </Link>
       <div className="flex items-center justify-between px-2 p-2 w-full">
-        <h3 className="text-lg">{Number(props.price).toFixed(2)}</h3>
+        <h3 className="text-lg">${Number(props.price).toFixed(2)}</h3>
         <div className="flex gap-2">
           <button
             className="border-2 p-2 flex items-center justify-center rounded-lg"

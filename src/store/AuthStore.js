@@ -15,9 +15,9 @@ const getAuth = async () => {
         `unique()`,
         {
           email: data.email,
-          cart: [],
-          like: [],
-          orders: [],
+          cart: ["[]"],
+          like: ["[]"],
+          orders: ["[]"],
         }
       );
       res=await database.listDocuments(import.meta.env.VITE_DB_ID,import.meta.env.VITE_COLLECTION_ID,[
