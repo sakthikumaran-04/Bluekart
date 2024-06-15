@@ -8,7 +8,7 @@ function Hero() {
   const auth = useAuthStore((state)=>state.auth);
   return (
     <>
-      <section className="Hero py-20 max-h-[90vh] flex flex-col-reverse items-center justify-center md:grid md:grid-cols-2 md:place-items-center">
+      <section className="Hero py-20 max-h-[90vh] flex flex-col-reverse items-center justify-center md:grid md:grid-cols-2 md:place-items-center md:h-[95vh]">
         <div className="font-medium py-16">
           <div className="flex flex-col gap-4 ">
             <h2 className="text-5xl max-md:text-3xl">Hey {auth?.id? String(auth.username).split(" ")[0].charAt(0).toUpperCase()+String(auth.username).split(" ")[0].slice(1) : "There"} 👋</h2>

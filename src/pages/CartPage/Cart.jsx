@@ -39,20 +39,8 @@ function Cart() {
       <section className="font-body flex flex-col items-center min-h-[90vh] pb-12 md:pl-10">
         <h2 className="py-6 text-2xl text-slate-600 font-medium ">My Cart</h2>
         <CartCard />
-        {cart.length ? (
-          <>
-            {/* <p className="pt-10 text-xl font-medium text-slate-600">
-            Total : ${total.toFixed(2)}
-          </p>
-          <button className="bg-blue-500 py-2 px-24 my-5 rounded-lg text-white font-medium" onClick={makePayment}>
-            Checkout
-          </button> */}
-          </>
-        ) : (
-          ""
-        )}
       </section>
-      <section className="flex flex-col items-center w-full pb-12 gap-4">
+      {cart.length>0?<section className="flex flex-col items-center w-full pb-12 gap-4">
         <h2 className="py-6 text-2xl text-slate-600 font-medium text-center ">
           Cart Summary
         </h2>
@@ -95,7 +83,7 @@ function Cart() {
         <button className="bg-blue-500 py-2 px-24 my-5 rounded-lg text-white font-medium" onClick={makePayment}>
             {loading?"loading":"Checkout"}
           </button> 
-      </section>
+      </section>:""}
     </div>
   );
 }

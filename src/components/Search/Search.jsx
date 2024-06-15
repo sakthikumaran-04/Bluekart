@@ -32,7 +32,7 @@ function Search({ query, showSearch, setshowSearch, inpRef }) {
         <div
           className={`${
             query.trim() != "" && showSearch ? "visible" : "invisible"
-          } fixed z-50  left-[50%] translate-y-[-0px] font-body translate-x-[-50%] text-center bg-slate-50 border-2 w-[360px] rounded-lg`}
+          } fixed z-50  left-[50%] translate-y-[-0px] font-body translate-x-[-50%] text-center bg-slate-50 border-2 w-[360px] max-sm:w-[320px] rounded-lg`}
         >
           {searchResults.map((item) => {
             return (
