@@ -11,7 +11,7 @@ function Input({ type, placeholder, image , data , set }) {
         setShowPassword(prev=>!prev);
     }
   return (
-    <div className=" bg-slate-100 w-auto max-sm:w-3/2 max-sm:mx-2 rounded-lg border-2 flex items-center relative">
+    <div className=" bg-slate-100 w-full rounded-lg border-2 flex items-center relative">
       <img
         src={image == "user" ? user : image == "mail" ? mail : key}
         className="w-[15px] ml-5 absolute rounded-sm"

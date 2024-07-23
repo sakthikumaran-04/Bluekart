@@ -20,6 +20,9 @@ function Success() {
       if (access_token != token || !access_token) {
         navigate("/");
       }
+      setTimeout(()=>{
+        sessionStorage.setItem("access_token"," ")
+      },10000)
       console.log(cart);
       if(access_token==token){
       try {

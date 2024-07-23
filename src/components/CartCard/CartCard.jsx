@@ -13,7 +13,7 @@ function CartCard() {
           return (
               <div
                 key={item.id}
-                className="flex font-body items-center px-2 justify-center w-full border-b-2 py-6"
+                className="flex font-body items-center justify-center w-full border-b-2 py-6"
               >
                 <Link to={`/allproducts/product/${item.id}`}>
                   <div className="w-[70px] h-[70px] flex items-center justify-center">

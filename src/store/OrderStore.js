@@ -42,6 +42,7 @@ export const useOrderStore = create((set) => ({
     set({ orders: arr });
   },
   addToOrders: async(id,orderid, payload) =>{
+    const date= new Date();
     const isThere = useOrderStore.getState().orders.some((item)=>item.orderId==orderid);
     if(isThere) return
     set((state) => ({

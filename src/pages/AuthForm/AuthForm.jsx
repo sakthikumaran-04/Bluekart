@@ -8,10 +8,12 @@ import loadingImg from "../../assets/images/loading-new.gif";
 import { database } from "../../appwrite/config";
 import { toast } from "react-toastify";
 import { Query } from "appwrite";
+import { FadeLoader } from "react-spinners";
 
 function AuthForm({ type, msg }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setgoogleLoading] = useState(false)
   const auth = useAuthStore((state) => state.auth);
   const registerWithGoogle = useAuthStore(
     (state) => state.createOAuthSession
@@ -62,6 +64,7 @@ function AuthForm({ type, msg }) {
   };
 
   const googleLogin = async (e) => {
+    setgoogleLoading(true);
     e.preventDefault();
     setLoading(true);
     registerWithGoogle();
@@ -111,30 +114,30 @@ function AuthForm({ type, msg }) {
         }
       }
     } else {
-        setLoading(true);
-        const isValid = validate();
-        if (isValid) {
-          const res = await database.listDocuments(
-            import.meta.env.VITE_DB_ID,
-            import.meta.env.VITE_COLLECTION_ID,
-            [Query.equal("email", email)]
-          );
-          await loginWithEmailAndPassword(
-            res.documents[0].$id,
-            email,
-            password
-          );
-          if (auth && !auth.isVerified) {
-            navigate("/auth/verify");
-          }
-          setLoading(false);
+      setLoading(true);
+      const isValid = validate();
+      if (isValid) {
+        const res = await database.listDocuments(
+          import.meta.env.VITE_DB_ID,
+          import.meta.env.VITE_COLLECTION_ID,
+          [Query.equal("email", email)]
+        );
+        await loginWithEmailAndPassword(
+          res.documents[0].$id,
+          email,
+          password
+        );
+        if (auth && !auth.isVerified) {
+          navigate("/auth/verify");
         }
-       else {
-          toast.error("Invalid Credential!", {
-            position: "top-center",
-          });
-        }
+        setLoading(false);
       }
+      else {
+        toast.error("Invalid Credential!", {
+          position: "top-center",
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -150,12 +153,12 @@ function AuthForm({ type, msg }) {
   }, [auth]);
 
   return (
-    <section className="py-12 flex items-center justify-center">
-      <div className="font-body flex flex-col items-center justify-center gap-6">
+    <section className="py-12 flex items-center justify-center w-full">
+      <div className="font-body flex flex-col items-center justify-center gap-6 sm:w-[80%] max-sm:w-full max-w-[600px]">
         <h2 className="text-2xl text-slate-800">
           {type == "sign in" ? "Welcome Back!" : "Get Started!"}
         </h2>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-3 w-full max-md:mx-2 max-sm:px-2" onSubmit={handleSubmit}>
           {type == "sign up" ? (
             <Input
               type={"text"}
@@ -212,15 +215,17 @@ function AuthForm({ type, msg }) {
           </div>
           <button
             type="submit"
-            className="py-3 w-auto bg-blue-500 rounded-lg max-sm:mx-2"
+            className="py-3 w-auto bg-blue-500 rounded-lg"
           >
             {loading ? (
-              <div className="flex justify-center gap-4 items-center">
-                <img src={loadingImg} className="w-[25px]" alt="loading" />{" "}
+              <div className="flex justify-center gap-4 items-center text-white">
+                <FadeLoader cssOverride={{
+                  zoom: '40%'
+                }} color="rgba(255,255,255,5)" width={5} />
                 <p>Loading</p>
               </div>
             ) : (
-              type
+              <p className=" text-white">{type}</p>
             )}
           </button>
           <div className="flex items-center py-2 max-sm:mx-2">
@@ -229,10 +234,13 @@ function AuthForm({ type, msg }) {
             <div className="bg-slate-300 h-[2px] w-1/2"></div>
           </div>
           <button
-          type="button"
+            type="button"
             className="flex items-center justify-center gap-3 text-slate-800 py-3 max-sm:mx-2 bg-slate-100 rounded-lg"
             onClick={googleLogin}
           >
+            {googleLoading ? <FadeLoader cssOverride={{
+              zoom: '40%'
+            }} color="rgba(100,100,100,5)" width={5} /> : ""}
             <img src={googleImg} className="w-[26px]" alt="" />
             <p>Continue with Google</p>
           </button>

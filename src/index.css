@@ -22,5 +22,5 @@
   background: rgb(200, 10, 246) /* color of the scrollbar thumb on hover */
 }
 body{
-  @apply font-body
+  @apply font-body;
 }

@@ -13,8 +13,7 @@ function Cancel() {
     }
     setTimeout(()=>{
       sessionStorage.setItem("access_token"," ")
-      navigate("/");
-    },4000)
+    },10000)
   }, []);
   return (
     <>

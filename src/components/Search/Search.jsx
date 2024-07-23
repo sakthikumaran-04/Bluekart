@@ -32,7 +32,7 @@ function Search({ query, showSearch, setshowSearch, inpRef }) {
         <div
           className={`${
             query.trim() != "" && showSearch ? "visible" : "invisible"
-          } fixed z-50  left-[50%] translate-y-[-0px] font-body translate-x-[-50%] text-center bg-slate-50 border-2 w-[360px] max-sm:w-[320px] rounded-lg`}
+          } absolute z-50  left-[50%] translate-y-[-0px] font-body translate-x-[-50%] text-center bg-slate-50 border-2 md:top-[50px] top-[105px] rounded-b-lg md:rounded-lg w-full`}
         >
           {searchResults.map((item) => {
             return (
@@ -63,7 +63,7 @@ function Search({ query, showSearch, setshowSearch, inpRef }) {
         <div
           className={`${
             query.trim() != "" ? "visible" : "invisible"
-          }  flex items-center justify-center absolute gap-3 font-body p-2 left-[50%] translate-x-[-50%] bg-slate-50 w-[360px] rounded-lg border-2 z-30`}
+          }  flex items-center justify-center absolute gap-3 font-body p-2 left-[50%] translate-x-[-50%] bg-slate-50 rounded-lg border-2 z-30 w-full top-[105px] md:top-[50px]`}
         >
           <img src={loadingimg} className="w-[30px] my-1" alt="loading" />
           Loading...

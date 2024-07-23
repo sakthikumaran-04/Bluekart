@@ -34,9 +34,9 @@ function Menu(props) {
   },[auth])
   return (
     <div
-      className={`text-center font-body fixed z-30 right-5 ${
+      className={`text-center font-body absolute z-30 right-0 w-[180px] ${
         props.isMenu ? "visible" : "invisible"
-      } top-16 bg-slate-50 p-7 border-2 rounded-lg flex flex-col`}
+      } top-10 bg-slate-50 p-7 border-2 rounded-lg flex flex-col`}
     >
       <Link to={"/myorders"}>
         <button className="p-1" onClick={() => props.setMenu((prev) => !prev)}>
@@ -50,7 +50,7 @@ function Menu(props) {
       </Link>
       <Link to={"/signup"}>
         <button
-          className="px-5 py-2 flex items-center gap-2 bg-blue-500 text-white rounded-lg mt-3"
+          className="w-full justify-center py-2 flex items-center gap-2 bg-blue-500 text-white rounded-lg mt-3"
           onClick={() => {
             props.setMenu((prev) => !prev);
             handleLogin()

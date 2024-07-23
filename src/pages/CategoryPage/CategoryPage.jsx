@@ -3,15 +3,22 @@ import { useParams } from "react-router-dom";
 import loadingScreen from "../../assets/images/loading.gif";
 import filter from "../../assets/images/filter.svg";
 import Card from "../../components/Card/Card";
+import Sort from "../../components/Sort/Sort";
 function CategoryPage() {
   const { category } = useParams();
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [sortBy, setSortBy] = useState("default");
   const [isLoading, setisLoading] = useState(false);
   const [categoryProducts, setCategoryProducts] = useState([]);
+  function handleSortBy(e){
+    setSortBy(e.target.value);
+    setTimeout(() => setShowSortMenu(false),300);
+  }
   const fetchCategoryProducts = async () => {
     setisLoading(true);
     const api=import.meta.env.VITE_API;
     const response = await fetch(
-      `${api}/api/category/${category}`
+      `${api}/api/category/${category}?sort=${sortBy}`
     );
     const data = await response.json();
     setCategoryProducts([...data.products]);
@@ -19,25 +26,16 @@ function CategoryPage() {
   };
   useEffect(() => {
     fetchCategoryProducts();
-  }, []);
+  }, [sortBy]);
 
   return (
     <>
-      {isLoading ? (
-        <div className="flex items-center justify-center h-[90vh] flex-col">
-          <img src={loadingScreen} className="w-[70px]" alt="" />
-          <p className="m-8 text-lg font-body">Loading</p>
-        </div>
-      ) : (
         <section className="font-body">
           <div className="flex items-center gap-20 justify-center py-4">
             <p className="text-blue-500">
               Showing {categoryProducts.length} of 10
             </p>
-            <div className="flex items-center gap-1 border-2 p-3 rounded-md">
-              <p>Filter</p>
-              <img src={filter} className="w-[20px]" alt="" />
-            </div>
+            <Sort sortBy={sortBy} handleSortBy={handleSortBy} showSortMenu={showSortMenu} setShowSortMenu={setShowSortMenu}/>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-5 pb-12">
             {categoryProducts.map((item) => {
@@ -54,8 +52,15 @@ function CategoryPage() {
               );
             })}
           </div>
-        </section>
+          {isLoading ? (
+        <div className="flex flex-col font-medium items-center justify-center">
+          <img src={loadingScreen} className="w-[60px]" alt="Loading" />
+          <p>Loading</p>
+        </div>
+      ) : (
+        ""
       )}
+        </section>
     </>
   );
 }
