@@ -1,9 +1,10 @@
-import React from "react";
+
 import instagram from "../../assets/images/instagram.svg";
 import twitter from "../../assets/images/twitter.svg";
 import linkedin from "../../assets/images/linkedin.svg";
 import github from "../../assets/images/github.svg";
 import top from "../../assets/images/top.png";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const backToTop = () => {
@@ -24,22 +25,22 @@ function Footer() {
       <div className="bg-slate-800 text-slate-300 font-body grid grid-cols-2 text-center p-5 gap-4">
         <div className="flex-1">
           <h3 className="font-medium text-lg pb-1">Shop</h3>
-          <p className="cursor-pointer text-sm">Men's</p>
-          <p className="cursor-pointer text-sm">Women's</p>
-          <p className="cursor-pointer text-sm">Electronics</p>
-          <p className="cursor-pointer text-sm">Jewelry</p>
+          <Link to={`/categories/smartphone`}><p className="cursor-pointer text-sm">Phones</p></Link>
+          <Link to={`/categories/laptop`}><p className="cursor-pointer text-sm">Laptops</p></Link>
+          <Link to={`/categories/furniture`}><p className="cursor-pointer text-sm">Furnitures</p></Link>
+          <Link to={`/categories/lighting`}><p className="cursor-pointer text-sm">Lighting</p></Link>
         </div>
         <div className="flex-1">
           <h3 className="font-medium text-lg pb-1">Help</h3>
-          <p className="cursor-pointer text-sm">Contact us</p>
-          <p className="cursor-pointer text-sm">FAQ</p>
-          <p className="cursor-pointer text-sm">Copyright</p>
+          <p className="cursor-pointer text-sm"><a href="mailto:sakthikumaranofficial@gmail.com">Contact us</a></p>
+          <p className="cursor-pointer text-sm"><a href="mailto:sakthikumaranofficial@gmail.com">FAQ</a></p>
+          <p className="cursor-pointer text-sm"><a href="mailto:sakthikumaranofficial@gmail.com">Copyright</a></p>
         </div>
         <div className="flex gap-1 items-center justify-center">
-          <img src={linkedin} className="w-[30px]" alt="go to linkedin" />
-          <img src={twitter} className="w-[30px]" alt="go to twitter" />
-          <img src={instagram} className="w-[30px]" alt="go to instagram" />
-          <img src={github} className="w-[30px]" alt="go to github" />
+        <a href="https://linkedin.com/in/sakthikumaran-n"><img src={linkedin} className="w-[30px]" alt="go to linkedin" /></a>
+        <a href="https://x.com/sakthi_kumaran_"><img src={twitter} className="w-[30px]" alt="go to twitter" /></a>
+        <a href="https://www.instagram.com/_sakthikumaran_/"><img src={instagram} className="w-[30px]" alt="go to instagram" /></a>
+        <a href="https://github.com/sakthikumaran-04"><img src={github} className="w-[30px]" alt="go to github" /></a>
         </div>
         <div>
           <p className="text-sm pt-2">*Terms & conditions</p>

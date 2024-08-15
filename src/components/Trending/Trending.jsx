@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import loading from "../../assets/images/loading.gif";
 import Card from "../Card/Card";
+import { ScaleLoader } from "react-spinners";
 
 function Trending() {
   const [trending, setTrending] = useState([]);
@@ -34,10 +35,10 @@ function Trending() {
         Trending
       </h2>
       {isLoading ? (
-        <div className="flex flex-col h-48 pt-10 items-center justify-center">
-          <img src={loading} className="w-[60px]" alt="loading" />
-          <p className="font-medium font-body m-2">Loading</p>
-        </div>
+         <div className="flex flex-col h-48 pt-10 items-center justify-center">
+         <ScaleLoader color="#5e4ef8" />
+         <p className="font-medium font-body m-2">Loading</p>
+       </div>
       ) : (
         <div className="font-body py-5">
           <div className="flex items-center justify-center lg:px-20">

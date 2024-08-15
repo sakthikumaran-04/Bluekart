@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import loadingScreen from "../../assets/images/loading.gif";
-import filter from "../../assets/images/filter.svg";
 import Card from "../../components/Card/Card";
 import Sort from "../../components/Sort/Sort";
+import { ScaleLoader } from "react-spinners";
 function CategoryPage() {
   const { category } = useParams();
   const [showSortMenu, setShowSortMenu] = useState(false);
@@ -30,8 +29,8 @@ function CategoryPage() {
 
   return (
     <>
-        <section className="font-body">
-          <div className="flex items-center gap-20 justify-center py-4">
+        <section className="font-body flex flex-col items-center">
+          <div className="flex items-center px-2 justify-between max-w-[1080px] w-full py-4">
             <p className="text-blue-500">
               Showing {categoryProducts.length} of 10
             </p>
@@ -53,10 +52,10 @@ function CategoryPage() {
             })}
           </div>
           {isLoading ? (
-        <div className="flex flex-col font-medium items-center justify-center">
-          <img src={loadingScreen} className="w-[60px]" alt="Loading" />
-          <p>Loading</p>
-        </div>
+         <div className="flex flex-col h-48 pt-10 items-center justify-center">
+         <ScaleLoader color="#5e4ef8" />
+         <p className="font-medium font-body m-2">Loading</p>
+       </div>
       ) : (
         ""
       )}

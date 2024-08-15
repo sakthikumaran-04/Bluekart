@@ -43,11 +43,11 @@ function Menu(props) {
           My Orders
         </button>
       </Link>
-      <Link to={"/bug-report"}>
+      <a href="mailto:sakthikumaranofficial@gmail.com">
         <button className="p-1" onClick={() => props.setMenu((prev) => !prev)}>
           Report Bug
         </button>
-      </Link>
+        </a>
       <Link to={"/signup"}>
         <button
           className="w-full justify-center py-2 flex items-center gap-2 bg-blue-500 text-white rounded-lg mt-3"

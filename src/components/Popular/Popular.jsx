@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import loading from "../../assets/images/loading.gif";
 import Card from "../Card/Card";
+import { ScaleLoader } from "react-spinners";
 
 function Popular() {
   const [popular, setPopular] = useState([]);
@@ -37,11 +38,11 @@ function Popular() {
       </h2>
       {isLoading ? (
         <div className="flex flex-col h-48 pt-10 items-center justify-center">
-          <img src={loading} className="w-[60px]" alt="loading" />
+          <ScaleLoader color="#5e4ef8" />
           <p className="font-medium font-body m-2">Loading</p>
         </div>
       ) : (
-        <div className="font-body py-5">
+        <div className="font-body py-5 pb-20">
           <div className="flex items-center justify-center lg:px-20">
             <div className="flex gap-10 px-6 overflow-scroll py-10 overflow-y-hidden">
               {popular.map((item) => {

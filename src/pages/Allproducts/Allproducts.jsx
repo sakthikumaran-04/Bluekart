@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
 import loadingScreen from "../../assets/images/loading.gif";
 import Sort from "../../components/Sort/Sort";
+import { ScaleLoader } from "react-spinners";
 
 function Allproducts() {
   const [allproducts, setAllproducts] = useState([]);
@@ -36,7 +37,7 @@ function Allproducts() {
       <h2 className="text-center py-10 text-slate-500 font-medium text-2xl">
         All Products
       </h2>
-      <div className="flex items-center gap-20 pb-8">
+      <div className="flex items-center justify-between w-full max-w-[1080px] pb-8 px-2">
         <p className="text-blue-500">Showing {allproducts.length} of 100</p>
           <Sort sortBy={sortBy} handleSortBy={handleSortBy} showSortMenu={showSortMenu} setShowSortMenu={setShowSortMenu}/>
       </div>
@@ -57,10 +58,10 @@ function Allproducts() {
         })}
       </div>
       {loading ? (
-        <div className="flex flex-col font-medium items-center justify-center">
-          <img src={loadingScreen} className="w-[60px]" alt="Loading" />
-          <p>Loading</p>
-        </div>
+         <div className="flex flex-col h-48 pt-10 items-center justify-center">
+         <ScaleLoader color="#5e4ef8" />
+         <p className="font-medium font-body m-2">Loading</p>
+       </div>
       ) : (
         ""
       )}

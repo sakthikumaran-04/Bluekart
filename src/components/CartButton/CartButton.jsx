@@ -1,4 +1,3 @@
-import React, { useCallback } from "react";
 import trash from "../../assets/images/trash.svg";
 import { useCartStore } from "../../store/CartStore";
 function CartButton(props) {

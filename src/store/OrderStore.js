@@ -46,7 +46,7 @@ export const useOrderStore = create((set) => ({
     const isThere = useOrderStore.getState().orders.some((item)=>item.orderId==orderid);
     if(isThere) return
     set((state) => ({
-      orders: [...state.orders, { orderId: orderid , date: new Date(), items: payload }],
+      orders: [{ orderId: orderid , date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`, items: payload },...state.orders],
     }))
     await doUpdateOrders(id, useOrderStore.getState().orders);
 },

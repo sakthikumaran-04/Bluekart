@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import loadingScreen from "../../assets/images/loading.gif";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import notFound from "../../assets/images/no_data.jpg";
 import filter from "../../assets/images/filter.svg";
+import { ScaleLoader } from "react-spinners";
 function SearchResults() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ function SearchResults() {
   return (
     <section className="font-body flex items-center justify-center">
       <div className="flex flex-col items-center justify-center">
-      <div className="flex items-center justify-between gap-20 my-8 max-sm:justify-around max-sm:gap-0">
+      <div className="flex items-center justify-between w-full max-w-[1080px] my-8 max-sm:justify-around max-sm:gap-0">
         <p className="text-blue-500 mr-20">Results for  "{search.length>5 ? search.slice(0,5)+"...":search}"</p>
         <div className="relative">
           <div className="flex items-center gap-1 border-2 p-3 rounded-md cursor-pointer " onClick={()=>setShowSortMenu((prev)=>(!prev))}>
@@ -108,7 +108,10 @@ function SearchResults() {
           })}
         </div>
         {loading ? (
-          <img src={loadingScreen} className="w-[100px] py-6" alt="Loading" />
+           <div className="flex flex-col h-48 pt-10 items-center justify-center">
+           <ScaleLoader color="#5e4ef8" />
+           <p className="font-medium font-body m-2">Loading</p>
+         </div>
         ) : (
           ""
         )}

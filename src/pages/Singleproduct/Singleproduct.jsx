@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
 import loading from "../../assets/images/loading.gif";
@@ -12,6 +12,7 @@ import award from "../../assets/images/award.png";
 import payOnDelivery from "../../assets/images/cash.png";
 import { useCartStore } from "../../store/CartStore";
 import { useLikeStore } from "../../store/LikeStore";
+import { loadStripe } from "@stripe/stripe-js";
 function Singleproduct() {
   const cart = useCartStore((state)=>state.cart);
   const like = useLikeStore((state)=>state.like);
@@ -20,6 +21,13 @@ function Singleproduct() {
   const addToLike=useLikeStore((state)=>state.addToLike);
   const removeFromLike=useLikeStore((state)=>state.removeFromLike);
   const [isLoading, setisLoading] = useState(false);
+  const { pathname } = useLocation();
+  const [isLiked, setIsLiked] = useState(false);
+  const [inCart, setInCart] = useState(false);
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [productCategory, setProductCategory] = useState("");
+  const [rating, setRating] = useState(0);
   const [date, setdate] = useState(
     new Date().setDate(new Date().getDate() + 2)
   );
@@ -46,13 +54,10 @@ function Singleproduct() {
     "November",
     "December",
   ]);
-  const { pathname } = useLocation();
-  const [isLiked, setIsLiked] = useState(false);
-  const [inCart, setInCart] = useState(false);
-  const { id } = useParams();
-  const [product, setProduct] = useState({});
-  const [productCategory, setProductCategory] = useState("");
-  const [rating, setRating] = useState(0);
+  const handleBuyNow = (obj)=>{
+    if(!inCart)
+      addToCart(obj);
+  }
   const fetchProduct = async () => {
     setisLoading(true);
     const api=import.meta.env.VITE_API;
@@ -217,9 +222,19 @@ function Singleproduct() {
                 >
                   {inCart ? "Remove from cart" : "Add to cart"}
                 </button>
-                <button className="p-3 w-80  bg-blue-500 text-slate-50 border-2 border-blue-500 max-w-80 rounded-lg font-medium">
+                <Link to={`/cart`}>
+                <button className="p-3 w-80  bg-blue-500 text-slate-50 border-2 border-blue-500 max-w-80 rounded-lg font-medium" onClick={() =>
+                    handleBuyNow({
+                      id: product._id,
+                      title: product.name,
+                      description: product.description,
+                      price: product.price,
+                      image: product.image || product.thumbnail,
+                    })
+                  }>
                   Buy Now
                 </button>
+                </Link>
               </div>
             </div>
           </section>

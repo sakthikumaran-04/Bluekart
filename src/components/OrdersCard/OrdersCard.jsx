@@ -2,10 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function OrdersCard({ data }) {
-  const formatDate = () => {
-    const date = new Date(data.date);
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-  };
+  
   const tempTotal = JSON.parse(data.items[0]).reduce((accumulator, currentValue) => {
     return accumulator + currentValue.price * currentValue.quantity;
   }, 0);
@@ -13,7 +10,7 @@ function OrdersCard({ data }) {
   return (
     <div className="text-slate-900 customShadow rounded-md p-2 my-6 m-2 border-blue-500 pb-4">
       <p className=" bg-gray-200 w-fit p-2 mb-2 rounded-xl">Order Id: <span className="text-blue-700">#{data.orderId}</span></p>
-      <p className="p-2">Date: {formatDate()}</p>
+      <p className="p-2">Date: {data.date}</p>
       <div>
         {JSON.parse(data.items[0]).map((item) => (
           <Link to={`/allproducts/product/${item.id}`}>

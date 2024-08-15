@@ -14,7 +14,7 @@ function Home() {
       <Trending />
       <CurrentOffer />
       <Popular />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </>
   );
 }

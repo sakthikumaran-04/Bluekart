@@ -29,7 +29,7 @@ function Cart() {
       sessionId: session.id,
     });
   };
-
+  console.log(cart)
   useEffect(() => {
     const tempTotal = cart.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.price * currentValue.quantity;
@@ -37,7 +37,7 @@ function Cart() {
     setTotal(tempTotal);
   }, [cart]);
   return (
-    <div className="grid md:grid-cols-2 max-w-[1440px] w-full">
+    <div className={`grid ${cart.length>0?"md:grid-cols-2":""} max-w-[1440px] w-full`}>
       <section className="font-body flex flex-col items-center min-h-[90vh] pb-12 md:pl-10 w-full">
         <h2 className="py-6 text-2xl text-slate-600 font-medium ">My Cart</h2>
         <CartCard />
@@ -83,13 +83,13 @@ function Cart() {
             <p>${total.toFixed(2)}</p>
           </div>
         </div>
-        <button className="bg-blue-500 py-2 px-24 w-[70%] my-5 rounded-lg text-white font-medium" onClick={makePayment}>
+        <button className="bg-blue-500 py-2 px-24  my-5 rounded-lg text-white font-medium" onClick={makePayment}>
             {loading?<div className="flex justify-center gap-4 items-center text-white">
                 <FadeLoader cssOverride={{
                   zoom: '40%'
                 }} color="rgba(255,255,255,5)" width={5} />
                 <p>Loading</p>
-              </div>:"Checkout"}
+              </div>:<p>Checkout</p>}
           </button> 
       </section>:""}
     </div>

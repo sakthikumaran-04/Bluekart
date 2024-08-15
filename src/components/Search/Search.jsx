@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchCard from "../SearchCard/SearchCard";
 import loadingimg from "../../assets/images/loading.gif";
 import { Link } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
 function Search({ query, showSearch, setshowSearch, inpRef }) {
   const [searchResults, setsearchResults] = useState([]);
@@ -65,7 +66,7 @@ function Search({ query, showSearch, setshowSearch, inpRef }) {
             query.trim() != "" ? "visible" : "invisible"
           }  flex items-center justify-center absolute gap-3 font-body p-2 left-[50%] translate-x-[-50%] bg-slate-50 rounded-lg border-2 z-30 w-full top-[105px] md:top-[50px]`}
         >
-          <img src={loadingimg} className="w-[30px] my-1" alt="loading" />
+          <ScaleLoader color="#5e4ef8" height={30} width={3}/>
           Loading...
         </div>
       )}
